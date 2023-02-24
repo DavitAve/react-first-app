@@ -1,0 +1,28 @@
+.loading__wrapper {
+  width: 100%;
+  display: flex;
+  margin-bottom: 5px;
+}
+.loading__bar {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.2);
+}
+.loading__line {
+  position: absolute;
+  width: 20%;
+  height: 100%;
+  left: 0;
+  background: #0f6292;
+  animation: loading 1.8s linear infinite;
+}
+@keyframes loading {
+  0% {
+    left: -20%;
+  }
+  100% {
+    left: 100%;
+  }
+}
