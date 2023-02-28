@@ -25,7 +25,7 @@ const ItemsList = () => {
         setCurrentPage((prev) => prev - 1)
       }
     } else {
-      if(currentPage < Math.ceil(news.length/perPage)) {
+      if(currentPage <= paginLength.length-1) {
         setCurrentPage((prev) => prev + 1)
       }
     }
@@ -62,7 +62,7 @@ const ItemsList = () => {
             return <Item key={item?.url} item={item} />;
           })}
         </div>
-        <div className="pagination__wrapper flex items-center justify-center pt-4 pb-3">
+        <div className="pagination__wrapper flex items-center justify-center pt-7 pb-4">
           <div className="pagination__list flex gap-2">
             <div onClick={() => { changePaginPage('prev') }} className="pagin__arrow">
               <img src={arrow} alt="" className="ibg"/>

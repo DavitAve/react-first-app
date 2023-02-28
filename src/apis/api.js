@@ -9,4 +9,13 @@ export default class NewsApi {
             console.log('ERROR', e)
         }
     }
+
+    static async getComments() {
+        try {
+            const response = await axios.get('https://jsonplaceholder.typicode.com/comments?_limit=5')
+            return response.data
+        } catch(e) {
+            console.log('ERROR', e)
+        }
+    }
 }
