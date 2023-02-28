@@ -1,8 +1,6 @@
-.list {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+
+.news-list {
+
 }
 .item {
     width: calc((100% - 40px) / 3);
@@ -12,11 +10,46 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 .item-btn {
-    border: 1px solid lightseagreen;
+    border: 1px solid #228BE6;
 }
 .item__title {
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.pagin__bullet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #228BE6;
+    transition: all 0.2s ease;
+}
+.pagin__bullet:hover, .pagin__bullet._active {
+    background: #228BE6;
+    color: #fff;
+}
+.pagin__bullet:active {transform: scale(.9);}
+.pagin__arrow {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    background: #228BE6;
+}
+.pagin__arrow:active {
+    transform: scale(0.9);
+}
+.pagin__arrow img {
+    width: 85%;
+    height: 85%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.pagin__arrow.reverse > img{
+    transform: translate(-50%, -50%) rotate(180deg);
 }

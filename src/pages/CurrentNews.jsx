@@ -29,28 +29,26 @@ const CurrentNews = () => {
   }, [news]);
 
   return (
-    <div>
+    <div className="pb-10">
       <div className="container">
         {newsLoad ? <LightLoader /> : ""}
         <div className="currentNews flex flex-col min-h-[880px] bg-[#fff]">
           <div className="currentNews__top h-[720px] relative border-2 border-[#919090]">
-            
-            <img src={item.urlToImage || noImage} alt="" className="ibg" />
+            <img src={item?.urlToImage || noImage} alt="" className="ibg" />
           </div>
           <div className="flex-auto p-4">
-            <h1 className="pb-4 text-5xl">Item Title</h1>
-            <p className="pb-2">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Explicabo dolor nihil aspernatur inventore voluptatibus? Eius
-              pariatur, repellendus nemo facere, quo harum nostrum odit ipsa
-              quia nisi quis perspiciatis, commodi temporibus?
-            </p>
-            <p className="pb-2">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Explicabo dolor nihil aspernatur inventore voluptatibus? Eius
-              pariatur, repellendus nemo facere, quo harum nostrum odit ipsa
-              quia nisi quis perspiciatis, commodi temporibus?
-            </p>
+            <h1 className="pb-4 text-5xl">{item?.title}</h1>
+            <div className="flex items-center pb-4">
+              <span>Author - </span>
+              <h1 className="text-3xl"> {item?.author}</h1>
+            </div>
+            <p className="pb-2">{item?.content}</p>
+            <p className="pb-2">{item?.description}</p>
+            <div>
+              <a href={item?.url} target="_blank" className="def__link">
+                Item Source
+              </a>
+            </div>
           </div>
         </div>
       </div>

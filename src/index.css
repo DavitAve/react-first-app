@@ -36,3 +36,11 @@ body {
 .header{
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
+.def__link {
+  font-size: 20px;
+  transition: all 0.2s ease;
+  color: deepskyblue;
+}
+.def__link:hover {
+  color: gray;
+}
