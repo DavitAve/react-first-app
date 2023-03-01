@@ -42,6 +42,7 @@ const CurrentNews = () => {
       name: user.name,
       id: comment.id + 1,
       postId: comment.id + 1,
+      answers: [],
     });
   };
   const addAnswer = (id, comment) => {

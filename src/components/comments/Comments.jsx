@@ -4,7 +4,7 @@ import Comment from "./Comment";
 
 const Comments = ({ comments, add, addAnswer }) => {
   const [comment, setComment] = useState();
-  const [activeCommentUser, setActiveCommentUser] = useState({});
+  const [activeCommentUser, setActiveCommentUser] = useState({type: 'comm'});
   const [commentAction, setCommentAction] = useState("comm");
 
   const addComment = () => {
