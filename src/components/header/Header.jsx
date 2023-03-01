@@ -25,9 +25,9 @@ const Header = () => {
           </h1>
           <div>
             <ul className="flex items-center gap-4">
-              {menu.map((el) => {
+              {menu.map((el,index) => {
                 return (
-                  <Link to={el.path} key={el.id}>
+                  <Link to={el.path} key={index}>
                     {el.name}
                   </Link>
                 );

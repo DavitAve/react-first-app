@@ -1,3 +1,9 @@
 .comments-area > .commment:last-child {
       margin-bottom: 10px !important;
 }
+.commment {
+      border: 1px solid gray;
+}
+.commment._active {
+      border: 3px solid #00337C;
+}

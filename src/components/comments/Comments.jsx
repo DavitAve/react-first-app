@@ -1,28 +1,40 @@
-import { useState } from "react";
-import BulletMenu from "../UI/menu/bullet-menu/BulletMenu";
+import { useEffect, useState } from "react";
 import "./style.css";
+import Comment from "./Comment";
 
-const Comments = ({ comments, add }) => {
-  const [comment, setComment] = useState("");
+const Comments = ({ comments, add, addAnswer }) => {
+  const [comment, setComment] = useState();
+  const [activeCommentUser, setActiveCommentUser] = useState({});
+  const [commentAction, setCommentAction] = useState("comm");
+
+  const addComment = () => {
+    if (activeCommentUser.type === "comm") {
+      add({ comment: comment, id: comments.length });
+    } else if (activeCommentUser.type === "answer") {
+      addAnswer(activeCommentUser.id, comment);
+    }
+    setComment("");
+  };
+  const changeAction = (info) => {
+    setCommentAction(info.e.comType.value);
+    setActiveCommentUser({
+      type: info.e.comType.value,
+      id: info.item.id,
+      email: info.item.email,
+    });
+  };
+
   return (
     <div className="p-4">
       <div className="comments-area h-[450px] overflow-auto pr-4 mb-2">
-        {comments.map((item) => {
+        {comments?.map((item, index) => {
           return (
-            <div
-              className="commment px-3 py-2 border-[1px] border-black mb-4"
-              key={item.id + Math.ceil(Math.random())}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <span className="text-[deepskyblue">Author - </span>
-                  <h2 className="ml-1] text-xl">{item.name}</h2>
-                </div>
-                <BulletMenu />
-              </div>
-              <p className="py-2 text-lg text-[gray]">{item.body}</p>
-              <h3 className="text-[deepskyblue]">{item.email}</h3>
-            </div>
+            <Comment
+              key={index}
+              item={item}
+              setInputAction={changeAction}
+              action={activeCommentUser}
+            />
           );
         })}
       </div>
@@ -35,8 +47,24 @@ const Comments = ({ comments, add }) => {
           />
         </div>
         <div className="flex-auto pl-3 flex flex-col items-end">
+          {commentAction === "answer" ? (
+            <div className="flex-auto w-full flex justify-between">
+              <div>Answer to {activeCommentUser.email}</div>
+              <div
+                onClick={() => {
+                  setCommentAction("comm");
+                  setActiveCommentUser({ type: "comm" });
+                }}
+              >
+                X
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
           <textarea
             name=""
+            value={comment}
             id=""
             cols="30"
             rows="10"
@@ -48,7 +76,7 @@ const Comments = ({ comments, add }) => {
           <button
             className="def-btn mt-2"
             onClick={() => {
-              add({ comment: comment, id: comments.length });
+              addComment();
             }}
           >
             Send

@@ -11,11 +11,11 @@ const CurrentNews = () => {
   const [newsLoad, setNewsLoad] = useState(true);
   const [item, setItem] = useState({});
   const { id } = useParams();
-  const [ newComment, setNewComment ] = useState({})
-  const [ user, setUser ] = useState({
-    name: 'User 001',
-    email: 'userTest@gmail.com'
-  })
+  const [newComment, setNewComment] = useState({});
+  const [user, setUser] = useState({
+    name: "User 001",
+    email: "userTest@gmail.com",
+  });
 
   const fetchNews = async () => {
     setNewsLoad(true);
@@ -26,20 +26,36 @@ const CurrentNews = () => {
 
   const fetchComments = async () => {
     const res = await NewsApi.getComments();
-    setComments(res)
-  };
 
+    const modified = res.map((item) => {
+      return {
+        ...item,
+        answers: [],
+      };
+    });
+    setComments(modified);
+  };
   const addComment = (comment) => {
-    setNewComment(
-      {
-        body: comment.comment,
-        email: user.email,
-        name: user.name,
-        id: comment.id + 1,
-        postId: comment.id + 1,
-      }
-    )
-  }
+    setNewComment({
+      body: comment.comment,
+      email: user.email,
+      name: user.name,
+      id: comment.id + 1,
+      postId: comment.id + 1,
+    });
+  };
+  const addAnswer = (id, comment) => {
+    setComments((prev) => {
+      return [...prev?.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              answers: [...item.answers, comment],
+            }
+          : item
+      )]
+    });
+  };
 
   useEffect(() => {
     fetchNews();
@@ -47,10 +63,10 @@ const CurrentNews = () => {
   }, []);
 
   useEffect(() => {
-    if(newComment.body) {
-      setComments((prev) => [...prev, newComment])
+    if (newComment.body) {
+      setComments((prev) => [...prev, newComment]);
     }
-  }, [newComment])
+  }, [newComment]);
 
   useEffect(() => {
     if (news.length) {
@@ -84,7 +100,11 @@ const CurrentNews = () => {
         </div>
         <div className="mb-8 bg-[#fff]">
           <h2 className="text-2xl mb-4 pl-4 pt-4">Commetns</h2>
-          <Comments comments={comments} add={addComment}/>
+          <Comments
+            comments={comments}
+            add={addComment}
+            addAnswer={addAnswer}
+          />
         </div>
       </div>
     </div>

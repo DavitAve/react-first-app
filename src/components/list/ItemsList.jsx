@@ -58,8 +58,8 @@ const ItemsList = () => {
       <div>
         {newsLoad ? <LightLoader></LightLoader> : ''}
         <div className="flex flex-wrap gap-5 news-list">
-          {paginatedNews?.map((item) => {
-            return <Item key={item?.url} item={item} />;
+          {paginatedNews?.map((item,index) => {
+            return <Item key={index} item={item} />;
           })}
         </div>
         <div className="pagination__wrapper flex items-center justify-center pt-7 pb-4">
@@ -68,8 +68,8 @@ const ItemsList = () => {
               <img src={arrow} alt="" className="ibg"/>
             </div>
             {
-              paginLength.map(e => {
-                return <div key={e} className={`pagin__bullet ${currentPage === e? '_active' : ''}`} onClick={() => {setCurrentPage(e)}}>{e}</div>
+              paginLength.map((e, index) => {
+                return <div key={index} className={`pagin__bullet ${currentPage === e? '_active' : ''}`} onClick={() => {setCurrentPage(e)}}>{e}</div>
               })
             }
             <div onClick={() => { changePaginPage('next') }} className="pagin__arrow reverse">
