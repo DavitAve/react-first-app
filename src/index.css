@@ -4,9 +4,13 @@
 
 /* 
   colors
-  #00337C
+  #258CE6
 */
-
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -53,15 +57,28 @@ body {
   cursor: pointer;
   padding: 8px 16px;
   border-radius: 6px;
-  background: #00337C;
-  border: 1px solid #00337C;
+  background: #258CE6;
+  border: 1px solid #258CE6;
   color: #fff;
   transition: all 0.2s ease;
 }
 .def-btn:hover {
   background: #fff;
-  color: #00337C;
+  color: #258CE6;
 }
 .def-btn:active {
   transform: scale(0.9);
+}
+.btn-def-active {
+  transition: 0.2s;
+}
+.btn-def-active:active {
+  transform: scale(0.9);
+}
+.def-light-txt {
+  color: #258CE6;
+}
+
+.def-block-shadow {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }

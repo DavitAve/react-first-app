@@ -18,4 +18,12 @@ export default class NewsApi {
             console.log('ERROR', e)
         }
     }
+    static async getUser() {
+        try {
+            const response = await axios.get(`https://randomuser.me/api/`)
+            return {...response.data.results[0]}
+        } catch (e) {
+            console.log('ERROR', e);
+        }
+    }
 }
