@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import "./style.css";
 import Comment from "./Comment";
+import CloseIcon from '../../assets/icons/close-blue.png'
 
 const Comments = ({ comments, add, addAnswer }) => {
   const [comment, setComment] = useState();
   const [activeCommentUser, setActiveCommentUser] = useState({type: 'comm'});
-  const [commentAction, setCommentAction] = useState("comm");
 
   const addComment = () => {
     if (activeCommentUser.type === "comm") {
@@ -13,10 +13,11 @@ const Comments = ({ comments, add, addAnswer }) => {
     } else if (activeCommentUser.type === "answer") {
       addAnswer(activeCommentUser.id, comment);
     }
-    setComment("");
+    setTimeout(() => {
+      setComment("");
+    }, 50);
   };
   const changeAction = (info) => {
-    setCommentAction(info.e.comType.value);
     setActiveCommentUser({
       type: info.e.comType.value,
       id: info.item.id,
@@ -47,16 +48,17 @@ const Comments = ({ comments, add, addAnswer }) => {
           />
         </div>
         <div className="flex-auto pl-3 flex flex-col items-end">
-          {commentAction === "answer" ? (
+          {activeCommentUser.type === "answer" ? (
             <div className="flex-auto w-full flex justify-between">
-              <div>Answer to {activeCommentUser.email}</div>
+              <div>Answer to <span className="def-light-txt">{activeCommentUser.email}</span></div>
               <div
                 onClick={() => {
-                  setCommentAction("comm");
                   setActiveCommentUser({ type: "comm" });
                 }}
               >
-                X
+                <div className="cursor-pointer btn-def-active">
+                  <img src={CloseIcon} alt="" />
+                </div>
               </div>
             </div>
           ) : (
@@ -70,6 +72,11 @@ const Comments = ({ comments, add, addAnswer }) => {
             rows="10"
             onChange={(e) => {
               setComment(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if(e.key === 'Enter') {
+                addComment();
+              }
             }}
             className="resize-none py-1 px-2 border-[1px] border-black block w-full h-[100px]"
           ></textarea>

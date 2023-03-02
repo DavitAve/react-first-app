@@ -42,19 +42,22 @@ const Comment = ({ item, setInputAction, action }) => {
         <h3 className="text-[deepskyblue]">{item?.email}</h3>
       </div>
       <div>
-        <div>
-          Answers -{" "}
+        <div className="my-2">
+          Answers -
           {item.answers?.length ? (
-            <span>({item.answers.length})</span>
+            <span> ({item.answers.length})</span>
           ) : (
-            <span>No Answers</span>
+            <span> No Answers</span>
           )}{" "}
         </div>
         {item.answers?.map((e, index) => {
           return (
-            <div key={index} className="px-3 pt-2 py-3 border-2 border-[red] mb-2">
-              <h1>User</h1>
-              <p>{e}</p>
+            <div
+              key={index}
+              className="px-3 pt-2 py-3 border-2 border-[forestgreen] mb-2"
+            >
+              <h1>User - <span className="def-light-txt"> @{e.user} </span></h1>
+              <p>{e.text}</p>
             </div>
           );
         })}

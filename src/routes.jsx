@@ -2,26 +2,31 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./Layout";
 import News from "./pages/News";
 import Home from "./pages/Home";
+import UserPage from "./pages/UserPage";
 import CurrentNews from "./pages/CurrentNews";
 
 const RootProv = () => {
   const routes = createBrowserRouter([
     {
-      element: <Layout />,
+      element: <Layout/>,
       children: [
         {
-          element: <Home />,
+          element: <Home/>,
           path: "/",
         },
         {
-          element: <News />,
+          element: <News/>,
           path: "/news",
         },
         {
-          element: <CurrentNews />,
+          element: <CurrentNews/>,
           path: "/news/:id",
         },
       ]
+    },
+    {
+      element: <UserPage/>,
+      path: "/user"
     }
   ]);
   return <RouterProvider router={routes} />;

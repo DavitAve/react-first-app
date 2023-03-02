@@ -51,7 +51,10 @@ const CurrentNews = () => {
         item.id === id
           ? {
               ...item,
-              answers: [...item.answers, comment],
+              answers: [...item.answers, {
+                user: user.name,
+                text: comment,
+              }],
             }
           : item
       )]
@@ -100,7 +103,7 @@ const CurrentNews = () => {
           </div>
         </div>
         <div className="mb-8 bg-[#fff]">
-          <h2 className="text-2xl mb-4 pl-4 pt-4">Commetns</h2>
+          <h2 className="text-2xl mb-4 pl-4 pt-4">Comments</h2>
           <Comments
             comments={comments}
             add={addComment}
