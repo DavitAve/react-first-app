@@ -45,6 +45,14 @@ const UserNewsForm = ({ addNews }) => {
       addNews(post);
       return post;
     });
+    setNewPost(() => {
+      return {
+        content: "",
+        description: "",
+        urlToImage: null,
+        publishedAt: null,
+      };
+    });
   };
 
   useEffect(() => {
@@ -107,7 +115,7 @@ const UserNewsForm = ({ addNews }) => {
             </div>
           </div>
 
-          <div className="inner flex flex-col gap-4 w-[720px] h-[180px] pr-2">
+          <div className="flex flex-col gap-4 w-[720px] h-[180px] pr-2">
             <div className="flex flex-col items-start">
               <label className="cursor-pointer mb-1 text-2xl" htmlFor="content">
                 Content
