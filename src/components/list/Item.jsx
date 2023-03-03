@@ -12,7 +12,7 @@ const Item = ({ item }) => {
                     <h2 className="item__title max-w-full text-2xl pb-2 break-all">{ item?.author || 'No Author' }</h2>
                     <p className="max-w-full text-xs text-[#383838]">{ item?.content || ''}</p>
                 </div>
-                <div className="flex">
+                <div className="flex justify-end">
                     <Link className="item-btn py-1 px-6 inline-block" to={`/news/${item?.author}`}>More</Link>
                 </div>
             </div>

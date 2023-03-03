@@ -103,7 +103,6 @@ const UserPage = () => {
     getUser();
     fetchNews();
   }, []);
-
   return (
     <div className="content relative">
       <DefDialog show={dialogVisiable} setShow={() => showDialogAction(false)}>
@@ -161,7 +160,7 @@ const UserPage = () => {
                         setFilters={changeFilters}
                         showDialog={() => showDialogAction(true)}
                       />
-                      <UserNewsList news={searchedNews} />
+                      <UserNewsList news={searchedNews} filters={filters} />
                     </div>
                   )}
                 </div>

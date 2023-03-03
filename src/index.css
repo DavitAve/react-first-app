@@ -26,7 +26,8 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-*, body {
+*,
+body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -45,7 +46,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
-.header{
+.header {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 .def__link {
@@ -60,17 +61,17 @@ body {
   cursor: pointer;
   padding: 8px 16px;
   border-radius: 6px;
-  background: #258CE6;
-  border: 1px solid #258CE6;
+  background: #258ce6;
+  border: 1px solid #258ce6;
   color: #fff;
   transition: all 0.2s ease;
 }
 .search-mark {
-  background: #258CE6;
+  background: #258ce6;
 }
 .def-btn:hover {
   background: #fff;
-  color: #258CE6;
+  color: #258ce6;
 }
 .def-btn:active {
   transform: scale(0.9);
@@ -82,20 +83,20 @@ body {
   transform: scale(0.9);
 }
 .def-light-txt {
-  color: #258CE6;
+  color: #258ce6;
 }
 .bullet-btn {
   cursor: pointer;
-  background: #258CE6;
+  background: #258ce6;
   padding: 4px 14px;
   font-size: 20px;
   color: #fff;
   transition: all 0.2s ease;
-  border: 1px solid #258CE6;
+  border: 1px solid #258ce6;
 }
 .bullet-btn:hover {
   background: #fff;
-  color: #258CE6;
+  color: #258ce6;
 }
 .bullet-btn:active {
   transform: scale(0.9);
@@ -107,25 +108,57 @@ body {
 .def-list {
   display: grid;
   gap: 30px;
-  grid-template-columns: repeat(2,1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .def-cart-cont {
-  border: 2px solid #ccc;  
+  border: 2px solid #ccc;
   border-top: none !important;
 }
 .test {
   background: blue;
 }
 .def-textarea {
-  border: 2px solid #ccc;  
+  border: 2px solid #ccc;
   padding: 8px;
   background: rgb(246, 246, 246);
 }
 .def-textarea:focus {
-  border-color: #258CE6;
+  border-color: #258ce6;
   outline: none;
 }
-.inner {
-  overflow-y: auto;
+.def-checkbox._checked .def-checkbox-img {
+  opacity: 1;
+}
+.def-checkbox._checked .def-checkbox-txt {
+  color: #339af0;
+}
+.def-checkbox._checked .def-checkbox-ic {
+  border-color: #339af0;
+}
+.def-checkbox-ic {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #5c5c5c;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+.def-checkbox-img {
+  transition: inherit;
+  opacity: 0;
+}
+.def-checkbox-txt {
+  color: #5c5c5c;
+  font-weight: 500;
+  transition: inherit;
+}
+.def-checkbox:hover .def-checkbox-img {
+  opacity: 1;
+}
+.def-checkbox:hover .def-checkbox-txt {
+  color: #339af0;
+}
+.def-checkbox:hover .def-checkbox-ic {
+  border-color: #339af0;
 }
