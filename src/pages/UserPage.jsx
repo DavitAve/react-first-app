@@ -1,11 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import NewsApi from "../apis/api";
 import CircleLoader from "../components/UI/loader/circle/Loader";
 import UserImg from "../assets/images/user.png";
+import UserNewsList from "../components/user/UserNewsList";
+import LightLoader from "../components/UI/loader/light/Loader";
+import UserFilterControls from "../components/user/UserFilterControls";
 
 const UserPage = () => {
   const [user, setUser] = useState("");
+  const [news, setNews] = useState([]);
+  const [newsLoading, setNewsLoading] = useState(true);
   const [userLodaing, setUserLoading] = useState(true);
+  const [filters, setFiters] = useState({
+    search: ''
+  })
+
+  const changeFilters = (filter) => {
+    if(filter.type === 'search') {
+      setFiters((prev) => {
+        return {
+          ...prev,
+          search: filter.value
+        }
+      })
+    }
+  }
 
   const getUser = async () => {
     setUserLoading(true);
@@ -14,15 +33,51 @@ const UserPage = () => {
     setUserLoading(false);
   };
 
-  useEffect(() => {
-    console.log("user", user);
-  }, [user]);
+  const fetchNews = async () => {
+    setNewsLoading(true);
+    const res = await NewsApi.getNews();
+    setNews(res);
+    setNewsLoading(false);
+  };
+
+  const userNews = useMemo(() => {
+    const data = [];
+    news?.forEach((item) => {
+      data.length < 6 && data.push(item);
+    });
+    return data;
+  }, [news]);
+
+  const searchedNews = useMemo(() => {
+    let data = userNews
+    let searched = userNews
+    
+    searched = searched.map(e => {
+     return {
+      ...e,
+      content:  e.content.replaceAll(filters.search, `<div>${filters.search}</div>`)
+     }
+    })
+    if(filters.search.length) {
+      data = data.filter(item => {return item.content.toLowerCase().includes(filters.search.toLowerCase())}).map(e => {
+        return {
+          ...e,
+          content:  e.content.toLowerCase().replaceAll(filters.search.toLowerCase(), '<span class="search-mark">' + filters.search + '</span>')
+         }
+      })
+    } else {
+      data = [...userNews]
+    }
+    return data
+  }, [filters,userNews])
 
   useEffect(() => {
     getUser();
+    fetchNews();
   }, []);
+
   return (
-    <div>
+    <div className="content">
       <div className="container pt-2">
         {userLodaing ? (
           <div className="flex justify-center">
@@ -62,7 +117,19 @@ const UserPage = () => {
             </div>
             <div className="def-block-shadow p-4 bg-white my-5">
               <div>
-                <h2 className="text-4xl">User News</h2>
+                <div>
+                  <h2 className="text-4xl">User News</h2>
+                </div>
+                <div className="py-4">
+                  {newsLoading ? (
+                    <LightLoader />
+                  ) : (
+                    <div>
+                      <UserFilterControls filters={filters} setFilters={changeFilters} /> 
+                      <UserNewsList news={searchedNews} />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
