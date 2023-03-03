@@ -38,7 +38,7 @@ const ItemsList = () => {
 
   const paginLength = useMemo(() => {
     const items = []
-    for (let i = 1; i < Math.ceil(news.length/perPage); i++) {
+    for (let i = 1; i < Math.ceil(news?.length/perPage); i++) {
       items.push(i)      
     }
     return items
@@ -48,14 +48,16 @@ const ItemsList = () => {
     const items = []
     if(currentPage < 1) return []
     for (let i = (currentPage-1) * perPage; i < currentPage*perPage; i++) {
-      items.push(news[i])
+      if(news) items.push(news[i])
     }
     return items
   }, [currentPage])
 
   return (
     <div className="container">
-      <div>
+      {
+        news? 
+        <div>
         {newsLoad ? <LightLoader></LightLoader> : ''}
         <div className="flex flex-wrap gap-5 news-list">
           {paginatedNews?.map((item,index) => {
@@ -78,6 +80,10 @@ const ItemsList = () => {
           </div>
         </div>
       </div>
+      : 
+      <div>Empty</div> 
+      }
+
     </div>
   );
 };

@@ -84,7 +84,22 @@ body {
 .def-light-txt {
   color: #258CE6;
 }
-
+.bullet-btn {
+  cursor: pointer;
+  background: #258CE6;
+  padding: 4px 14px;
+  font-size: 20px;
+  color: #fff;
+  transition: all 0.2s ease;
+  border: 1px solid #258CE6;
+}
+.bullet-btn:hover {
+  background: #fff;
+  color: #258CE6;
+}
+.bullet-btn:active {
+  transform: scale(0.9);
+}
 .def-block-shadow {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
@@ -101,4 +116,16 @@ body {
 }
 .test {
   background: blue;
+}
+.def-textarea {
+  border: 2px solid #ccc;  
+  padding: 8px;
+  background: rgb(246, 246, 246);
+}
+.def-textarea:focus {
+  border-color: #258CE6;
+  outline: none;
+}
+.inner {
+  overflow-y: auto;
 }
