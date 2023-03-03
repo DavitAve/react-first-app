@@ -5,26 +5,36 @@ import UserImg from "../assets/images/user.png";
 import UserNewsList from "../components/user/UserNewsList";
 import LightLoader from "../components/UI/loader/light/Loader";
 import UserFilterControls from "../components/user/UserFilterControls";
+import DefDialog from "../components/UI/dialog/DefDialog";
+import UserNewsForm from "../components/user/UserNewsForm";
 
 const UserPage = () => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const [news, setNews] = useState([]);
   const [newsLoading, setNewsLoading] = useState(true);
   const [userLodaing, setUserLoading] = useState(true);
+  const [dialogVisiable, setDialogVisiable] = useState(false);
   const [filters, setFiters] = useState({
-    search: ''
-  })
+    search: "",
+  });
 
   const changeFilters = (filter) => {
-    if(filter.type === 'search') {
+    if (filter.type === "search") {
       setFiters((prev) => {
         return {
           ...prev,
-          search: filter.value
-        }
-      })
+          search: filter.value,
+        };
+      });
     }
-  }
+  };
+
+  const addNews = (item) => {
+    setDialogVisiable(false);
+    setNews((prev) => {
+      return [item, ...prev];
+    });
+  };
 
   const getUser = async () => {
     setUserLoading(true);
@@ -40,6 +50,10 @@ const UserPage = () => {
     setNewsLoading(false);
   };
 
+  const showDialogAction = (val) => {
+    setDialogVisiable(val);
+  };
+
   const userNews = useMemo(() => {
     const data = [];
     news?.forEach((item) => {
@@ -49,27 +63,41 @@ const UserPage = () => {
   }, [news]);
 
   const searchedNews = useMemo(() => {
-    let data = userNews
-    let searched = userNews
-    
-    searched = searched.map(e => {
-     return {
-      ...e,
-      content:  e.content.replaceAll(filters.search, `<div>${filters.search}</div>`)
-     }
-    })
-    if(filters.search.length) {
-      data = data.filter(item => {return item.content.toLowerCase().includes(filters.search.toLowerCase())}).map(e => {
-        return {
-          ...e,
-          content:  e.content.toLowerCase().replaceAll(filters.search.toLowerCase(), '<span class="search-mark">' + filters.search + '</span>')
-         }
-      })
+    let data = userNews;
+    let searched = userNews;
+
+    searched = searched.map((e) => {
+      return {
+        ...e,
+        content: e.content.replaceAll(
+          filters.search,
+          `<div>${filters.search}</div>`
+        ),
+      };
+    });
+    if (filters.search.length) {
+      data = data
+        .filter((item) => {
+          return item.content
+            .toLowerCase()
+            .includes(filters.search.toLowerCase());
+        })
+        .map((e) => {
+          return {
+            ...e,
+            content: e.content
+              .toLowerCase()
+              .replaceAll(
+                filters.search.toLowerCase(),
+                '<span class="search-mark">' + filters.search + "</span>"
+              ),
+          };
+        });
     } else {
-      data = [...userNews]
+      data = [...userNews];
     }
-    return data
-  }, [filters,userNews])
+    return data;
+  }, [filters, userNews]);
 
   useEffect(() => {
     getUser();
@@ -77,7 +105,10 @@ const UserPage = () => {
   }, []);
 
   return (
-    <div className="content">
+    <div className="content relative">
+      <DefDialog show={dialogVisiable} setShow={() => showDialogAction(false)}>
+        <UserNewsForm addNews={addNews} />
+      </DefDialog>
       <div className="container pt-2">
         {userLodaing ? (
           <div className="flex justify-center">
@@ -106,11 +137,11 @@ const UserPage = () => {
                 <div className="py-2">
                   <div className="flex items-center">
                     <span className="def-light-txt text-xl">Email - </span>
-                    <span className="text-xl"> {user.email}</span>
+                    <span className="text-xl"> { user.email }</span>
                   </div>
                   <div className="flex items-center">
                     <span className="def-light-txt text-xl">Phone - </span>
-                    <span className="text-xl"> {user.cell}</span>
+                    <span className="text-xl"> { user.cell }</span>
                   </div>
                 </div>
               </div>
@@ -125,7 +156,11 @@ const UserPage = () => {
                     <LightLoader />
                   ) : (
                     <div>
-                      <UserFilterControls filters={filters} setFilters={changeFilters} /> 
+                      <UserFilterControls
+                        filters={filters}
+                        setFilters={changeFilters}
+                        showDialog={() => showDialogAction(true)}
+                      />
                       <UserNewsList news={searchedNews} />
                     </div>
                   )}

@@ -1,0 +1,6 @@
+.dialog._active {
+      display: block;
+}
+.dialog._hide {
+      display: none;
+}

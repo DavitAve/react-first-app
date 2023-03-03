@@ -1,0 +1,25 @@
+.header__link {
+      position: relative;
+      transition: all 0.2s ease;
+}
+.header__link._active {
+      color: #258CE6;
+}
+.header__link:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      left: 0;
+      top: 130%;
+      background: #258CE6;
+      opacity: 0;
+      transition: inherit;
+}
+.header__link._free:hover {
+      color: #258CE6;
+}
+.header__link._free:hover:after {
+      opacity: 1;
+      top: 110%;
+}
