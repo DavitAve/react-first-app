@@ -28,7 +28,7 @@ const DefDialog = ({ children, show, setShow }) => {
 
   return (
     <div
-      className={`dialog fixed w-full h-[100vh] bg-[rgba(0,0,0,0.3)] top-0 left-0] z-10 ${
+      className={`dialog fixed w-full h-[100vh] bg-[rgba(0,0,0,0.3)] top-0 left-0] z-40 ${
         show ? "_active" : "_hide"
       }`}
     >

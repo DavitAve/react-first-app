@@ -1,23 +1,12 @@
 import Item from "./Item";
-import NewsApi from "../../apis/api";
 import "./styles.css";
 import { useState, useEffect, useMemo } from "react";
 import LightLoader from "../UI/loader/light/Loader";
 import arrow from '../../assets/icons/arrow.png'
 
-const ItemsList = () => {
-  const [news, setNews] = useState([]);
-  const [newsLoad, setNewsLoad] = useState(true);
+const ItemsList = ({news,load}) => {
   const [currentPage, setCurrentPage] = useState(0);
   const perPage = 9;
-
-  const fetchNews = async () => {
-    setNewsLoad(true);
-    const res = await NewsApi.getNews();
-    setNews(res);
-    setNewsLoad(false);
-    setCurrentPage(1)
-  };
   
   const changePaginPage = (type) => {
     if(type === 'prev') {
@@ -31,10 +20,11 @@ const ItemsList = () => {
     }
   }
 
-
   useEffect(() => {
-    fetchNews();
-  }, []);
+    if(!load) {
+      setCurrentPage(1)
+    }
+  }, [news]);
 
   const paginLength = useMemo(() => {
     const items = []
@@ -47,18 +37,19 @@ const ItemsList = () => {
   const paginatedNews = useMemo(() => {
     const items = []
     if(currentPage < 1) return []
+    if(!news.length) return []
     for (let i = (currentPage-1) * perPage; i < currentPage*perPage; i++) {
-      if(news) items.push(news[i])
+      items.push(news[i])
     }
-    return items
-  }, [currentPage])
+    return items || []
+  }, [currentPage,news])
 
   return (
     <div className="container">
       {
         news? 
         <div>
-        {newsLoad ? <LightLoader></LightLoader> : ''}
+        {load ? <LightLoader></LightLoader> : ''}
         <div className="flex flex-wrap gap-5 news-list">
           {paginatedNews?.map((item,index) => {
             return <Item key={index} item={item} />;
