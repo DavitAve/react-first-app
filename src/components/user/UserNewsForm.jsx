@@ -2,6 +2,7 @@ import NoImage from "../../assets/images/noimage.jpg";
 import moment from "moment";
 import TrashIcon from "../../assets/icons/trash.png";
 import { useEffect, useState } from "react";
+import useImageUpload from "../../hooks/useImageUpload";
 
 const UserNewsForm = ({ addNews }) => {
   const [currentDate, setCurrentDate] = useState(
@@ -13,22 +14,14 @@ const UserNewsForm = ({ addNews }) => {
     urlToImage: null,
     publishedAt: null,
   });
-
-  const uploadImage = (target) => {
-    const reader = new FileReader();
-    let img = "";
-
-    reader.addEventListener("load", () => {
-      img = reader.result;
-      setNewPost((prev) => {
-        return {
-          ...prev,
-          urlToImage: img,
-        };
-      });
-    });
-    reader.readAsDataURL(target.files[0]);
-  };
+  const [image, handleUploadImage] = useImageUpload((img) => {
+    setNewPost((prev) => {
+      return {
+        ...prev,
+        urlToImage: img.dataURL,
+      }
+    })
+  });
 
   const changeTime = () => {
     setInterval(() => {
@@ -108,14 +101,12 @@ const UserNewsForm = ({ addNews }) => {
                 id="image"
                 accept="image/png, image/jpeg"
                 className="hidden"
-                onChange={(e) => {
-                  uploadImage(e.target);
-                }}
+                onChange={handleUploadImage}
               />
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 w-[720px] h-[180px] pr-2">
+          <div className="flex flex-col gap-4 w-[720px] h-[180px] pr-2 overflow-auto">
             <div className="flex flex-col items-start">
               <label className="cursor-pointer mb-1 text-2xl" htmlFor="content">
                 Content
