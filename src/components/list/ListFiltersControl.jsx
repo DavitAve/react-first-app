@@ -9,6 +9,18 @@ const ListFiltersControls = ({ filters,changeFilters }) => {
       place: 'email',
       value: false,
     },
+    {
+      name: "Miztoc.com",
+      type: "miztoc",
+      place: 'email',
+      value: false,
+    },
+    {
+      name: "Test.com",
+      type: "test",
+      place: 'email',
+      value: false,
+    },
   ]);
 
 

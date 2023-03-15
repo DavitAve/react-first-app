@@ -3,7 +3,7 @@ import axios from 'axios'
 export default class NewsApi {
     static async getNews() {
         try {
-            const response = await axios.get('https://newsapi.org/v2/everything?q=tesla&from=2023-02-06&sortBy=publishedAt&apiKey=134f716502564871b5609dbc72503894')
+            const response = await axios.get('https://newsapi.org/v2/everything?q=tesla&from=2023-02-15&sortBy=publishedAt&apiKey=134f716502564871b5609dbc72503894')
             return response.data.articles
         } catch(e) {
             console.log('ERROR', e)
