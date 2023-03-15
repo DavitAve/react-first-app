@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import NewsApi from "../apis/api";
 import CircleLoader from "../components/UI/loader/circle/Loader";
 import UserImg from "../assets/images/user.png";
-import CameraIc from '../assets/icons/camera.png'
+import CameraIc from "../assets/icons/camera.png";
 import UserNewsList from "../components/user/UserNewsList";
 import LightLoader from "../components/UI/loader/light/Loader";
 import UserFilterControls from "../components/user/UserFilterControls";
@@ -12,7 +12,8 @@ import useImageUpload from "../hooks/useImageUpload";
 
 const UserPage = () => {
   const [user, setUser] = useState({
-    bgImg: 'https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg',
+    bgImg:
+      "https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg",
   });
   const [news, setNews] = useState([]);
   const [newsLoading, setNewsLoading] = useState(true);
@@ -26,8 +27,8 @@ const UserPage = () => {
       return {
         ...prev,
         bgImg: img.dataURL,
-      }
-    })
+      };
+    });
   });
   const changeFilters = (filter) => {
     if (filter.type === "search") {
@@ -43,7 +44,7 @@ const UserPage = () => {
   const addNews = (item) => {
     setDialogVisiable(false);
     setNews((prev) => {
-      return [item, ...prev];
+      return [item, ...(prev || [])];
     });
   };
 
@@ -52,7 +53,8 @@ const UserPage = () => {
     const res = await NewsApi.getUser();
     setUser({
       ...res,
-      bgImg: 'https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg'
+      bgImg:
+        "https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg",
     });
     setUserLoading(false);
   };
@@ -85,7 +87,7 @@ const UserPage = () => {
         ...e,
         content: e.content.replaceAll(
           filters.search,
-          `<div>${filters.search}</div>`
+          `<div>${e.content.slice(e.content.indexOf(filters.search), e.content.indexOf(filters.search) + filters.search.length)}</div>`
         ),
       };
     });
@@ -122,57 +124,71 @@ const UserPage = () => {
       <DefDialog show={dialogVisiable} setShow={() => showDialogAction(false)}>
         <UserNewsForm addNews={addNews} />
       </DefDialog>
-      <div className="pt-2">
+      <div>
         {userLodaing ? (
           <div className="flex justify-center">
             <CircleLoader />
           </div>
         ) : (
           <div className="flex flex-col">
-            <div className="pb-4">
-              <div className="h-[320px] relative">
-                <div className="absolute top-4 right-4 z-20">
-                  <label htmlFor="user-bg" className="block bg-[rgba(0,0,0,0.3)] p-4 cursor-pointer hover:bg-white duration-300 active:scale-[0.9]">
+            <div>
+              <div className="flex items-end h-[320px] relative">
+                <div className="absolute top-2 right-4 z-20">
+                  <label
+                    htmlFor="user-bg"
+                    className="block bg-[rgba(0,0,0,0.3)] p-4 cursor-pointer hover:bg-white duration-300 active:scale-[0.9]"
+                  >
                     <img src={CameraIc} alt="" />
                   </label>
-                  <input type="file" id="user-bg" className="hidden" onChange={handleUploadImage} />
+                  <input
+                    type="file"
+                    id="user-bg"
+                    className="hidden"
+                    onChange={handleUploadImage}
+                  />
                 </div>
                 <img className="ibg" src={user.bgImg} alt="" />
-              </div>
-            </div>
-            <div className="mt-[-190px] relative z-10">
-              <div className="container mb-5">
-                <div className="py-4 px-3 bg-white flex items-start def-block-shadow mb-4">
-                  <div className="relative w-32 h-32">
-                    <img
-                      className="ibg"
-                      src={user.picture?.medium || UserImg}
-                      alt=""
-                    />
-                  </div>
-                  <div className="pl-7 flex-auto">
-                    <div className="flex justify-between items-center w-full">
-                      <h1 className="text-3xl">
-                        {user.name?.first + " " + user.name?.last}
-                      </h1>
-                      <div>
-                        <span>ID:</span>
-                        <span>{user.id?.value}</span>
-                      </div>
+                <div className="container">
+                  <div className="py-4 px-3 bg-white flex items-start def-block-shadow mb-4 relative z-10">
+                    <div className="relative w-32 h-32">
+                      <img
+                        className="ibg"
+                        src={user.picture?.medium || UserImg}
+                        alt=""
+                      />
                     </div>
-                    <div className="py-2">
-                      <div className="flex items-center">
-                        <span className="def-light-txt text-xl">Email - </span>
-                        <span className="text-xl"> {user.email}</span>
+                    <div className="pl-7 flex-auto">
+                      <div className="flex justify-between items-center w-full">
+                        <h1 className="text-3xl">
+                          {user.name?.first + " " + user.name?.last}
+                        </h1>
+                        <div>
+                          <span>ID:</span>
+                          <span>{user.id?.value}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center">
-                        <span className="def-light-txt text-xl">Phone - </span>
-                        <span className="text-xl"> {user.cell}</span>
+                      <div className="py-2">
+                        <div className="flex items-center">
+                          <span className="def-light-txt text-xl">
+                            Email -{" "}
+                          </span>
+                          <span className="text-xl"> {user.email}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <span className="def-light-txt text-xl">
+                            Phone -{" "}
+                          </span>
+                          <span className="text-xl"> {user.cell}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="def-block-shadow p-4 bg-white">
+              </div>
+            </div>
+            <div className="relative z-10 pt-5">
+              <div className="container mb-5">
+                <div className="p-4 bg-white">
                   <div>
                     <h2 className="text-4xl">User News</h2>
                   </div>

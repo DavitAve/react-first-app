@@ -20,7 +20,6 @@ const News = () => {
     return mails[id]
   }
 
-
   const fetchNews = async () => {
     setNewsLoad(true);
     const res = await NewsApi.getNews();
@@ -43,6 +42,7 @@ const News = () => {
       return {
         ...prev,
         [item.place]: {
+          ...prev.email,
           [item.name]: item.value,
         },
       };
@@ -50,19 +50,17 @@ const News = () => {
   };
 
   const filteredNews = useMemo(() => {
-    let items = news;
-    if (
-      Object.entries(filters.email).filter(([key, value]) => {
-        if (value) return value;
-      }).length
-    ) {
-      Object.entries(filters.email).forEach(([key, value]) => {
-        if (value) {
-          items = items.filter((e) => {
-            if(e.email === key) return e
-          });
-        }
-      });
+    let items = [];
+    const selectedFilters = []
+    Object.entries(filters.email).forEach(([key, value]) => {
+      if(value) selectedFilters.push(key) 
+    })
+    if(selectedFilters.length) {
+      items = [...news.filter(e => {
+        if(selectedFilters.includes(e.email)) return e
+      })]
+    } else {
+      items = [...news]
     }
     return items;
   }, [filters]);

@@ -75,7 +75,10 @@ const CurrentNews = () => {
   useEffect(() => {
     if (news.length) {
       const element = news.find((e) => e.author === id);
-      if (element) setItem(element);
+      if (element) setItem({
+        ...element,
+        like: false,
+      });
     }
   }, [news]);
 
